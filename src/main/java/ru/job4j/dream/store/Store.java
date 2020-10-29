@@ -49,12 +49,24 @@ public class Store {
     }
 
     public void savePost(Post post) {
-        post.setId(POST_ID.incrementAndGet());
+        if (post.getId() == 0) {
+            post.setId(POST_ID.incrementAndGet());
+        }
         posts.put(post.getId(), post);
     }
 
+    public Post findPostById(int id) {
+        return this.posts.get(id);
+    }
+
+    public Candidate findCandidateById(int id) {
+        return this.candidates.get(id);
+    }
+
     public void saveCandidate(Candidate can) {
-        can.setId(CANDIDATE_ID.incrementAndGet());
+        if (can.getId() == 0) {
+            can.setId(CANDIDATE_ID.incrementAndGet());
+        }
         this.candidates.put(can.getId(), can);
     }
 }
