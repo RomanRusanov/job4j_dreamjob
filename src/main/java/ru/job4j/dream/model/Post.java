@@ -12,14 +12,10 @@ import java.util.*;
 public class Post {
     private int id;
     private String name;
-    private String description;
-    private Calendar created;
 
-    public Post(int id, String name, String description, Calendar created) {
+    public Post(int id, String name) {
         this.id = id;
         this.name = name;
-        this.description = description;
-        this.created = created;
     }
 
     public int getId() {
@@ -36,22 +32,6 @@ public class Post {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Calendar getCreated() {
-        return created;
-    }
-
-    public void setCreated(Calendar created) {
-        this.created = created;
     }
 
     @Override
