@@ -1,9 +1,5 @@
 package models;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -15,10 +11,6 @@ import java.util.Objects;
  */
 public class HREmployee {
     /**
-     * The instance with logger.
-     */
-    private static final Logger LOG = LoggerFactory.getLogger(HREmployee.class.getName());
-    /**
      * The filed with first name.
      */
     private final String firstName;
@@ -26,10 +18,6 @@ public class HREmployee {
      * The filed with last name.
      */
     private final String lastName;
-    /**
-     * The filed contain collection with all vacancy this HR employee.
-     */
-    private final Map<String, Vacancy> allVacancy = new HashMap<>();
 
     /**
      * The default constructor.
@@ -58,30 +46,6 @@ public class HREmployee {
     }
 
     /**
-     * The method get collection with all vacancy.
-     * @return HashMap.
-     */
-    public Map<String, Vacancy> getAllVacancy() {
-        return new HashMap<>(this.allVacancy);
-    }
-
-    /**
-     * The method add vacancy to collection.
-     * @param vacancy Vacancy.
-     */
-    public void addVacancy(Vacancy vacancy) {
-        this.allVacancy.put(vacancy.getTitle(), vacancy);
-    }
-
-    /**
-     * The method remove vacancy from collection.
-     * @param vacancy Vacancy.
-     */
-    public void removeVacancy(Vacancy vacancy)  {
-        this.allVacancy.remove(vacancy.getTitle());
-    }
-
-    /**
      * The method override equals.
      * @param o Object to compare.
      * @return Boolean.
@@ -96,8 +60,7 @@ public class HREmployee {
         }
         HREmployee that = (HREmployee) o;
         return firstName.equals(that.firstName)
-                && lastName.equals(that.lastName)
-                && allVacancy.equals(that.allVacancy);
+                && lastName.equals(that.lastName);
     }
 
     /**
@@ -106,7 +69,7 @@ public class HREmployee {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, allVacancy);
+        return Objects.hash(firstName, lastName);
     }
 
     /**
@@ -118,7 +81,6 @@ public class HREmployee {
         return "HREmployee{"
                 + "firstName='" + firstName + '\''
                 + ", lastName='" + lastName + '\''
-                + ", allVacancy=" + allVacancy
                 + '}';
     }
 }

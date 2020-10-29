@@ -1,7 +1,5 @@
 package models;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 /**
  * @author Roman Rusanov
@@ -19,10 +17,6 @@ public class Candidate {
      * The filed with last name.
      */
     private final String lastName;
-    /**
-     * The filed with all resume this candidate.
-     */
-    private final Map<String, Resume> allResumes = new HashMap<>();
 
     /**
      * The default constructor.
@@ -32,22 +26,6 @@ public class Candidate {
     public Candidate(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-    }
-
-    /**
-     * The method add resume to collection.
-     * @param resume Resume to add.
-     */
-    public void addResume(Resume resume) {
-        this.allResumes.put(resume.getTitle(), resume);
-    }
-
-    /**
-     * The method remove resume from collection.
-     * @param resume Resume.
-     */
-    public void removeResume(Resume resume) {
-        this.allResumes.remove(resume.getTitle());
     }
 
     /**
@@ -81,8 +59,7 @@ public class Candidate {
         }
         Candidate candidate = (Candidate) o;
         return firstName.equals(candidate.firstName)
-                && lastName.equals(candidate.lastName)
-                && allResumes.equals(candidate.allResumes);
+                && lastName.equals(candidate.lastName);
     }
 
     /**
@@ -91,7 +68,7 @@ public class Candidate {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, allResumes);
+        return Objects.hash(firstName, lastName);
     }
 
     /**
@@ -103,7 +80,6 @@ public class Candidate {
         return "Сandidate{"
                 + "firstName='" + firstName + '\''
                 + ", lastName='" + lastName + '\''
-                + ", allResumes=" + allResumes
                 + '}';
     }
 }
