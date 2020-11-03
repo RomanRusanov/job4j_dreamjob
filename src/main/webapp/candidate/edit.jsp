@@ -1,5 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="ru.job4j.dream.store.Store" %>
 <%@ page import="ru.job4j.dream.model.Candidate" %>
 <!doctype html>
 <html lang="en">
@@ -23,9 +22,9 @@
 <body>
 <%
     String id = request.getParameter("id");
-    Candidate can = new Candidate(0, "");
+    Candidate candidate = new Candidate(0, "");
     if (id != null) {
-        can = Store.instOf().findCandidateById(Integer.valueOf(id));
+        candidate = (Candidate) request.getAttribute("candidateById");
     }
 %>
 <div class="container pt-3">
@@ -39,10 +38,10 @@
                 <% } %>
             </div>
             <div class="card-body">
-                <form action="<%=request.getContextPath()%>/candidates.do?id=<%=can.getId()%>" method="post">
+                <form action="<%=request.getContextPath()%>/candidate/edit.do?id=<%=candidate.getId()%>" method="post">
                     <div class="form-group">
                         <label>Имя</label>
-                        <input type="text" class="form-control" name="name" value="<%=can.getName()%>">
+                        <input type="text" class="form-control" name="name" value="<%=candidate.getName()%>">
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>

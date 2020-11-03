@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="ru.job4j.dream.model.Candidate" %>
+<%@ page import="java.util.*" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -35,16 +36,16 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${candidates}" var="can">
-                            <tr>
-                                <td>
-                                    <a href='<c:url value="/candidate/edit.jsp?id=${can.id}"/>'>
-                                        <i class="fa fa-edit mr-3"></i>
-                                    </a>
-                                    <c:out value="${can.name}"/>
-                                </td>
-                            </tr>
-                        </c:forEach>
+                    <% for (Candidate candidate : (Collection<Candidate>) request.getAttribute("candidates")) { %>
+                    <tr>
+                        <td>
+                            <a href="<%=request.getContextPath()%>/candidate/edit.do?id=<%=candidate.getId()%>">
+                                <i class="fa fa-edit mr-3"></i>
+                            </a>
+                            <%=candidate.getName()%>
+                        </td>
+                    </tr>
+                    <% } %>
                     </tbody>
                 </table>
             </div>
