@@ -82,4 +82,16 @@ public class Candidate {
     public int hashCode() {
         return Objects.hash(id, name);
     }
+
+    /**
+     * The override toString method.
+     * @return String.
+     */
+    @Override
+    public String toString() {
+        return "Candidate{"
+                + "id=" + id
+                +", name='" + name + '\''
+                + '}';
+    }
 }

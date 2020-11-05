@@ -2,71 +2,51 @@ package ru.job4j.dream.store;
 
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
-import java.util.Collection;
-import java.util.GregorianCalendar;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.*;
 
+import java.util.Collection;
 /**
  * @author Roman Rusanov
  * @version 0.1
- * @since 27.10.2020
+ * @since 5.11.2020
  * email roman9628@gmail.com
- * The class .
+ * The interface describe storage candidate and post.
  */
-public class Store {
+public interface Store {
+    /**
+     * The method return collection with all posts.
+     * @return Collection.
+     */
+    Collection<Post> findAllPosts();
 
-    private static final Store INST = new Store();
+    /**
+     * The method return collection with all Candidates.
+     * @return Collection.
+     */
+    Collection<Candidate> findAllCandidates();
 
-    private Map<Integer, Post> posts = new ConcurrentHashMap<>();
+    /**
+     * The method save post to collection.
+     * @param post Instance of Post.
+     */
+    void savePost(Post post);
 
-    private Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
+    /**
+     * The method save post to collection.
+     * @param candidate Instance of Candidate.
+     */
+    void saveCandidate(Candidate candidate);
 
-    private static AtomicInteger POST_ID = new AtomicInteger(4);
+    /**
+     * The method find Post by id.
+     * @param id int id.
+     * @return Post.
+     */
+    Post findPostById(int id);
 
-    private static AtomicInteger CANDIDATE_ID = new AtomicInteger(4);
-
-    private Store() {
-        posts.put(1, new Post(1, "Junior Java Job"));
-        posts.put(2, new Post(2, "Middle Java Job"));
-        posts.put(3, new Post(3, "Senior Java Job"));
-        candidates.put(1, new Candidate(1, "Junior Java"));
-        candidates.put(2, new Candidate(2, "Middle Java"));
-        candidates.put(3, new Candidate(3, "Senior Java"));
-    }
-
-    public static Store instOf() {
-        return INST;
-    }
-
-    public Collection<Post> findAllPosts() {
-        return posts.values();
-    }
-
-    public Collection<Candidate> findAllCandidates() {
-        return candidates.values();
-    }
-
-    public void savePost(Post post) {
-        if (post.getId() == 0) {
-            post.setId(POST_ID.incrementAndGet());
-        }
-        posts.put(post.getId(), post);
-    }
-
-    public Post findPostById(int id) {
-        return this.posts.get(id);
-    }
-
-    public Candidate findCandidateById(int id) {
-        return this.candidates.get(id);
-    }
-
-    public void saveCandidate(Candidate can) {
-        if (can.getId() == 0) {
-            can.setId(CANDIDATE_ID.incrementAndGet());
-        }
-        this.candidates.put(can.getId(), can);
-    }
+    /**
+     * The method find Candidate by id.
+     * @param id int id.
+     * @return Post.
+     */
+    Candidate findCandidateById(int id);
 }

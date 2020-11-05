@@ -85,4 +85,16 @@ public class Post {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    /**
+     * The override toString method.
+     * @return String.
+     */
+    @Override
+    public String toString() {
+        return "Post{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + '}';
+    }
 }
