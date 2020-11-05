@@ -1,7 +1,7 @@
 package ru.job4j.dream.servlet;
 
 import ru.job4j.dream.model.Candidate;
-import ru.job4j.dream.store.MemStore;
+import ru.job4j.dream.store.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -28,7 +28,7 @@ public class CandidateEditServlet extends HttpServlet{
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getParameter("id") != null) {
             req.setAttribute(
-                    "candidateById", MemStore.instOf().findCandidateById(
+                    "candidateById", PsqlStore.instOf().findCandidateById(
                             Integer.parseInt(req.getParameter("id"))));
         }
         req.getRequestDispatcher("/candidate/edit.jsp").forward(req, resp);
@@ -43,7 +43,7 @@ public class CandidateEditServlet extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        MemStore.instOf().saveCandidate(
+        PsqlStore.instOf().saveCandidate(
                 new Candidate(
                         Integer.valueOf(req.getParameter("id")),
                         req.getParameter("name")));
