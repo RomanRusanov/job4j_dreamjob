@@ -17,6 +17,10 @@ public class Candidate {
      * The field contain name value.
      */
     private String name;
+    /**
+     * The field contain id photo in DB.
+     */
+    private int photoId;
 
     /**
      * The default constrictor.
@@ -61,6 +65,22 @@ public class Candidate {
     }
 
     /**
+     * The getter for photoId field.
+     * @return int name.
+     */
+    public int getPhotoId() {
+        return photoId;
+    }
+
+    /**
+     * The setter for photoId field.
+     * @param photoId int value.
+     */
+    public void setPhotoId(int photoId) {
+        this.photoId = photoId;
+    }
+
+    /**
      * The method override equals.
      * @param o Object to compare.
      * @return if fields equals return true, otherwise false.
@@ -92,6 +112,7 @@ public class Candidate {
         return "Candidate{"
                 + "id=" + id
                 +", name='" + name + '\''
+                +", photoId='" + photoId + '\''
                 + '}';
     }
 }

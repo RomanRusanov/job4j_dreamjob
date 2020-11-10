@@ -1,7 +1,7 @@
 package ru.job4j.dream.servlet;
 
 import ru.job4j.dream.model.Post;
-import ru.job4j.dream.store.*;
+import ru.job4j.dream.store.PsqlStore;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -28,6 +28,7 @@ public class PostServlet extends HttpServlet {
         req.setAttribute("posts", PsqlStore.instOf().findAllPosts());
         req.getRequestDispatcher("/posts.jsp").forward(req, resp);
     }
+
     /**
      * The postprocess.
      * @param req Request.

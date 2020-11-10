@@ -221,7 +221,6 @@ public class PsqlStore implements Store {
 
     /**
      * The method find Post by id.
-     *
      * @param id int id.
      * @return Post.
      */
@@ -247,7 +246,6 @@ public class PsqlStore implements Store {
 
     /**
      * The method find Candidate by id.
-     *
      * @param id int id.
      * @return Post.
      */
@@ -269,5 +267,99 @@ public class PsqlStore implements Store {
             e.printStackTrace();
         }
         return result;
+    }
+
+    /**
+     * The method add record to photo table and update candidate table.
+     * In photo table insert full path where photo store. In candidate table
+     * update photo_id column, this id link to photo table to id primary key.
+     * @param idCandidate int candidate id.
+     * @param pathPhoto String full photo path with file name and extension.
+     */
+    public void addCandidatePhoto(int idCandidate, String pathPhoto) {
+        int idPhoto = -1;
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement(
+                     "INSERT INTO photo(path) VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setString(1, pathPhoto);
+            ps.execute();
+            try (ResultSet id = ps.getGeneratedKeys()) {
+                if (id.next()) {
+                    idPhoto = id.getInt(1);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement(
+                     "UPDATE candidate set photo_id=(?) where id=(?)")
+        ) {
+            ps.setInt(1, idPhoto);
+            ps.setInt(2, idCandidate);
+            ps.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * The method get path file with photo candidate from table photo.
+     * Use join for make request use candidate id.
+     * @param candidateId int candidate id.
+     * @return String with full path from photo table.
+     */
+    public String getPhotoPath(int candidateId) {
+        String result = "";
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement(
+                     "select p.path from candidate c left join photo p "
+                             + "on c.photo_id = p.id where c.id=(?);")
+        ) {
+            ps.setInt(1, candidateId);
+            try (ResultSet record = ps.executeQuery()) {
+                if (record.next()) {
+                    result = record.getString(1);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * The method delete candidate and candidate photo from table
+     * candidate, photo.
+     * @param id int candidate id.
+     */
+    public void deleteCandidate(int id) {
+        int photoId = -1;
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement(
+                     "select photo_id from candidate where id=(?);")
+        ) {
+            ps.setInt(1, id);
+            try (ResultSet record = ps.executeQuery()) {
+                if (record.next()) {
+                    photoId = record.getInt(1);
+                }
+            }
+            try (PreparedStatement psDelCandidate =  cn.prepareStatement(
+                    "delete from candidate where id=(?);")
+            ) {
+                psDelCandidate.setInt(1, id);
+                psDelCandidate.executeUpdate();
+            }
+            try (PreparedStatement psDelPhoto =  cn.prepareStatement(
+                    "delete from photo where id=(?);")
+            ) {
+                psDelPhoto.setInt(1, photoId);
+                psDelPhoto.executeUpdate();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

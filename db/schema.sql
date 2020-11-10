@@ -4,5 +4,10 @@ CREATE TABLE post (
 );
 CREATE TABLE candidate (
     id SERIAL PRIMARY KEY,
-    name TEXT
+    name TEXT,
+    photo_id NUMERIC
+);
+CREATE TABLE photo (
+    id SERIAL PRIMARY KEY,
+    path TEXT
 );

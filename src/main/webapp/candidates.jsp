@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="ru.job4j.dream.model.Candidate" %>
-<%@ page import="java.util.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -22,7 +21,6 @@
 </head>
 <body>
 <div class="container pt-3">
-
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
@@ -36,18 +34,30 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <% for (Candidate candidate : (Collection<Candidate>) request.getAttribute("candidates")) { %>
-                    <tr>
-                        <td>
-                            <a href="<%=request.getContextPath()%>/candidate/edit.do?id=<%=candidate.getId()%>">
-                                <i class="fa fa-edit mr-3"></i>
-                            </a>
-                            <%=candidate.getName()%>
-                        </td>
-                    </tr>
-                    <% } %>
+                    <c:forEach items="${candidates}" var="candidate">
+                        <tr>
+                            <td>
+                                <a href='<c:url value="/candidate/edit.do?id=${candidate.id}"/>'>
+                                    <i class="fa fa-edit mr-3"></i>
+                                </a>
+                                <c:out value="${candidate.name}"/>
+                                <img src="<c:url value='/candidate/viewPhotoServlet.do?photoId=${candidate.id}'/>" width="100px" height="100px"/>
+                                <br>
+                                <a href='<c:url value="/candidate/uploadCandidatePhoto.do?id=${candidate.id}"/>'>
+                                    Загрузить новую картинку
+                                </a>
+                                <br>
+                                <a href='<c:url value="/candidate/delete.do?id=${candidate.id}"/>'>
+                                    Удалить кандидата
+                                </a>
+                            </td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
+                <a href='<c:url value="/index.do"/>'>
+                    На главную страницу
+                </a>
             </div>
         </div>
     </div>
