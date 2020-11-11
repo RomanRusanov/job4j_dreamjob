@@ -31,6 +31,7 @@ public class CandidateEditServlet extends HttpServlet{
                     "candidateById", PsqlStore.instOf().findCandidateById(
                             Integer.parseInt(req.getParameter("id"))));
         }
+        req.setAttribute("user", req.getSession().getAttribute("user"));
         req.getRequestDispatcher("/candidate/edit.jsp").forward(req, resp);
     }
     /**

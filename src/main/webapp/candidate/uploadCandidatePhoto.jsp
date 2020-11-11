@@ -16,6 +16,11 @@
     request.setAttribute("idCandidate", idCan);
 %>
 <div class="container">
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> <c:out value="${user.name}"/> | Выйти</a>
+        </li>
+    </ul>
     <h2>Upload image</h2>
     <form action="<c:url value='/candidate/uploadCandidatePhoto.do?id=${idCandidate}'/>" method="post" enctype="multipart/form-data">
 

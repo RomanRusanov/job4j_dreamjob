@@ -21,6 +21,7 @@ public class UploadCandidatePhoto extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher dispatcher = req.getRequestDispatcher("/candidate/uploadCandidatePhoto.jsp");
+        req.setAttribute("user", req.getSession().getAttribute("user"));
         dispatcher.forward(req, resp);
     }
 

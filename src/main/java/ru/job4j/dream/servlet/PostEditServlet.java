@@ -30,6 +30,7 @@ public class PostEditServlet extends HttpServlet {
                     "postById", PsqlStore.instOf().findPostById(
                             Integer.parseInt(req.getParameter("id"))));
         }
+        req.setAttribute("user", req.getSession().getAttribute("user"));
         req.getRequestDispatcher("/post/edit.jsp").forward(req, resp);
     }
 
