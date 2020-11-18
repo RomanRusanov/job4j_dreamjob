@@ -11,3 +11,9 @@ CREATE TABLE photo (
     id SERIAL PRIMARY KEY,
     path TEXT
 );
+CREATE TABLE userapp (
+    id SERIAL PRIMARY KEY,
+    name TEXT,
+    email TEXT,
+    password TEXT
+);

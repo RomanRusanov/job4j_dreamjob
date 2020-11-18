@@ -27,6 +27,26 @@ public class User {
     private String password;
 
     /**
+     * Overloaded constructor.
+     * @param id int
+     * @param name String
+     * @param email String
+     * @param password String
+     */
+    public User(int id, String name, String email, String password) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+    /**
+     * The default constructor.
+     */
+    public User() {
+    }
+
+    /**
      * The get for filed.
      * @return int value.
      */

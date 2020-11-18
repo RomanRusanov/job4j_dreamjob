@@ -1,7 +1,6 @@
 package ru.job4j.dream.store;
 
-import ru.job4j.dream.model.Candidate;
-import ru.job4j.dream.model.Post;
+import ru.job4j.dream.model.*;
 
 import java.util.Collection;
 /**
@@ -25,6 +24,17 @@ public interface Store {
     Collection<Candidate> findAllCandidates();
 
     /**
+     * The method return all users in app.
+     * @return Collection.
+     */
+    Collection<User> findAllUsers();
+
+    /**
+     * The method save user in collection.
+     * @param user Instance of User.
+     */
+    void saveUser(User user);
+    /**
      * The method save post to collection.
      * @param post Instance of Post.
      */
@@ -35,6 +45,13 @@ public interface Store {
      * @param candidate Instance of Candidate.
      */
     void saveCandidate(Candidate candidate);
+
+    /**
+     * The method find User by id.
+     * @param id int id.
+     * @return
+     */
+    User findUserById(int id);
 
     /**
      * The method find Post by id.

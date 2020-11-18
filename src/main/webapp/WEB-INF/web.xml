@@ -52,7 +52,32 @@
     <servlet-name>AuthServlet</servlet-name>
     <servlet-class>ru.job4j.dream.servlet.AuthServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>UsersServlet</servlet-name>
+    <servlet-class>ru.job4j.dream.servlet.UsersServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>UserEditServlet</servlet-name>
+    <servlet-class>ru.job4j.dream.servlet.UserEditServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>UserDeleteServlet</servlet-name>
+    <servlet-class>ru.job4j.dream.servlet.UserDeleteServlet</servlet-class>
+  </servlet>
 <!--  Servlet Mappings-->
+
+  <servlet-mapping>
+    <servlet-name>UserDeleteServlet</servlet-name>
+    <url-pattern>/users/delete.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UserEditServlet</servlet-name>
+    <url-pattern>/users/edit.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UsersServlet</servlet-name>
+    <url-pattern>/users.do</url-pattern>
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>AuthServlet</servlet-name>
     <url-pattern>/auth.do</url-pattern>

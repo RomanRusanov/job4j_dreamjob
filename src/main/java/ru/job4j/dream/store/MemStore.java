@@ -1,7 +1,6 @@
 package ru.job4j.dream.store;
 
-import ru.job4j.dream.model.Candidate;
-import ru.job4j.dream.model.Post;
+import ru.job4j.dream.model.*;
 
 import java.util.Collection;
 import java.util.Map;
@@ -25,9 +24,13 @@ public class MemStore implements Store {
      */
     private Map<Integer, Post> posts = new ConcurrentHashMap<>();
     /**
-     * The collection store candidates. Key is.
+     * The collection store candidates. Key id.
      */
     private Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
+    /**
+     * The collection store users. Key id.
+     */
+    private Map<Integer, User> users = new ConcurrentHashMap<>();
     /**
      * The field contain atomic id counter for posts.
      */
@@ -36,6 +39,10 @@ public class MemStore implements Store {
      * The field contain atomic id counter for posts.
      */
     private static AtomicInteger CANDIDATE_ID = new AtomicInteger(4);
+    /**
+     * The field contain atomic id counter for users.
+     */
+    private static AtomicInteger USER_ID = new AtomicInteger(1);
 
     /**
      * The default constructor.
@@ -73,6 +80,29 @@ public class MemStore implements Store {
     }
 
     /**
+     * The method return all users in app.
+     *
+     * @return Collection.
+     */
+    @Override
+    public Collection<User> findAllUsers() {
+        return users.values();
+    }
+
+    /**
+     * The method save user in collection.
+     *
+     * @param user Instance of User.
+     */
+    @Override
+    public void saveUser(User user) {
+        if (user.getId() == 0) {
+            user.setId(POST_ID.incrementAndGet());
+        }
+        users.put(user.getId(), user);
+    }
+
+    /**
      * The method save post to collection.
      * @param post Instance of Post.
      */
@@ -92,6 +122,17 @@ public class MemStore implements Store {
             can.setId(CANDIDATE_ID.incrementAndGet());
         }
         this.candidates.put(can.getId(), can);
+    }
+
+    /**
+     * The method find User by id.
+     *
+     * @param id int id.
+     * @return User.
+     */
+    @Override
+    public User findUserById(int id) {
+        return this.users.get(id);
     }
 
     /**
