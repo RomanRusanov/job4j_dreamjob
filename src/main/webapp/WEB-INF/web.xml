@@ -64,8 +64,16 @@
     <servlet-name>UserDeleteServlet</servlet-name>
     <servlet-class>ru.job4j.dream.servlet.UserDeleteServlet</servlet-class>
   </servlet>
-<!--  Servlet Mappings-->
+  <servlet>
+    <servlet-name>RegServlet</servlet-name>
+    <servlet-class>ru.job4j.dream.servlet.RegServlet</servlet-class>
+  </servlet>
 
+<!--  Servlet Mappings-->
+  <servlet-mapping>
+    <servlet-name>RegServlet</servlet-name>
+    <url-pattern>/reg.do</url-pattern>
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>UserDeleteServlet</servlet-name>
     <url-pattern>/users/delete.do</url-pattern>
