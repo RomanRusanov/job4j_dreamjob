@@ -4,6 +4,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
 import ru.job4j.dream.model.User;
+import ru.job4j.dream.servlet.Validate;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -21,7 +22,7 @@ import java.util.Properties;
  * email roman9628@gmail.com
  * The class describe work with db.
  */
-public class PsqlStore implements Store {
+public class PsqlStore implements Store, Validate {
     /**
      * The instance provide connection to db what not
      * create new instance each time, reuse connection.
@@ -54,6 +55,48 @@ public class PsqlStore implements Store {
         pool.setMinIdle(5);
         pool.setMaxIdle(10);
         pool.setMaxOpenPreparedStatements(100);
+    }
+
+    /**
+     * The method add model to storage.
+     * Need for test with mock.
+     * @param user Model
+     * @return return model instance with real unique id from storage.
+     */
+    @Override
+    public User addUser(User user) {
+        return this.createUser(user);
+    }
+
+    /**
+     * The method get all existed models in storage.
+     * Need for test with mock.
+     * @return Collection User's instance.
+     */
+    @Override
+    public List<User> getAllUsers() {
+        return (ArrayList<User>) this.findAllUsers();
+    }
+
+    /**
+     * The method add model to storage.
+     * Need for test with mock.
+     * @param post Model
+     * @return return model instance with real unique id from storage.
+     */
+    @Override
+    public Post addPost(Post post) {
+        return this.createPost(post);
+    }
+
+    /**
+     * The method get all existed models in storage.
+     * Need for test with mock.
+     * @return Collection Posts instances.
+     */
+    @Override
+    public List<Post> getAllPosts() {
+        return new ArrayList<>(this.findAllPosts());
     }
 
     /**

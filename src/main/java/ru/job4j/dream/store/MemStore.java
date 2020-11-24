@@ -1,9 +1,11 @@
 package ru.job4j.dream.store;
 
-import ru.job4j.dream.model.*;
+import ru.job4j.dream.model.Candidate;
+import ru.job4j.dream.model.Post;
+import ru.job4j.dream.model.User;
+import ru.job4j.dream.servlet.Validate;
 
-import java.util.Collection;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -14,7 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * email roman9628@gmail.com
  * The class Describe local storage in collection.
  */
-public class MemStore implements Store {
+public class MemStore implements Store, Validate {
     /**
      * The field contain instance of memStore(singleton).
      */
@@ -151,5 +153,49 @@ public class MemStore implements Store {
      */
     public Candidate findCandidateById(int id) {
         return this.candidates.get(id);
+    }
+
+    /**
+     * The method add model to storage.
+     * Need for test with mock.
+     * @param user Model
+     * @return return model instance with real unique id from storage.
+     */
+    @Override
+    public User addUser(User user) {
+        this.saveUser(user);
+        return this.findUserById(user.getId());
+    }
+
+    /**
+     * The method get all existed models in storage.
+     * Need for test with mock.
+     * @return Collection User's instance.
+     */
+    @Override
+    public List<User> getAllUsers() {
+        return new ArrayList<>(this.findAllUsers());
+    }
+
+    /**
+     * The method add model to storage.
+     * Need for test with mock.
+     * @param post Model
+     * @return return model instance with real unique id from storage.
+     */
+    @Override
+    public Post addPost(Post post) {
+        this.savePost(post);
+        return this.findPostById(post.getId());
+    }
+
+    /**
+     * The method get all existed models in storage.
+     * Need for test with mock.
+     * @return Collection Posts instances.
+     */
+    @Override
+    public List<Post> getAllPosts() {
+        return new ArrayList<>(this.findAllPosts());
     }
 }

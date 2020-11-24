@@ -17,6 +17,9 @@ import java.io.IOException;
  * The class describe behavior servlet users page.
  */
 public class UsersServlet extends HttpServlet {
+
+    private final Validate logic = (Validate) PsqlStore.instOf();
+
     /**
      * The preprocess.
      * @param req Request.
@@ -41,12 +44,12 @@ public class UsersServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        PsqlStore.instOf().saveUser(
+        this.logic.addUser(
                 new User(
                         Integer.parseInt(req.getParameter("id")),
                         req.getParameter("name"),
                         req.getParameter("email"),
-                        req.getParameter("Password")
+                        req.getParameter("password")
                         )
         );
         resp.sendRedirect(req.getContextPath() + "/users.do");
