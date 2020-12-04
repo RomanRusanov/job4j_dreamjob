@@ -9,24 +9,21 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script>
         function validate() {
-            var firstname = $('#firstname').val();
-            var lastname = $('#lastname').val();
-            var sex = $('input[name="sex"]:checked').val();
-            var comment = $('#comment').val();
-            if(firstname === '') {
-                alert('Поле Фамилия не заполнено');
-            }
-            if(lastname === '') {
-                alert('Поле Имя не заполнено');
-            }
-            if(!$('input[name='sex']').is(':checked')) {
-                alert('Укажите ваш пол');
-            }
-            if(comment === '') {
-                alert('Поле комментарий не заполнено');
-            }
-            return false;
+            var firstname = checkUserInput($('#firstname'));
+            var lastname = checkUserInput($('#lastname'));
+            var sex = checkUserInput($('input[name="sex"]:checked'));
+            var comment = checkUserInput($('#comment'));
+            // alert($('input[name="sex"]').attr("title"));
         }
+        function checkUserInput(input) {
+            var currentInput = $(input).val();
+            if (currentInput === '' || currentInput === undefined) {
+                alert("Поле: "+ $(input).attr('title') + " не заполнено")
+                return "";
+            }
+            return currentInput;
+        }
+
     </script>
 </head>
 <body>
@@ -35,18 +32,18 @@
         <form action="">
             <div class="form-group">
                 <label for="firstname">Имя:</label>
-                <input type="text" class="form-control" id="firstname" placeholder="Введите имя" name="firstname">
+                <input type="text" class="form-control" id="firstname" placeholder="Введите имя" name="firstname" title="Имя">
             </div>
             <div class="form-group">
                 <label for="lastname">Фамилия:</label>
-                <input type="text" class="form-control" id="lastname" placeholder="Введите фамилию" name="lastname">
+                <input type="text" class="form-control" id="lastname" placeholder="Введите фамилию" name="lastname" title="Фамилия">
             </div>
             <div class="form-group">
                 <form>
                     <div class="radio">
                         Пол:
-                        <label><input type="radio" name="sex" value="male">мужчина</label>
-                        <label><input type="radio" name="sex" value="female">Женщина</label>
+                        <label><input type="radio" name="sex" value="male" title="Пол">мужчина</label>
+                        <label><input type="radio" name="sex" value="female" title="Пол">Женщина</label>
                     </div>
                 </form>
             </div>
@@ -54,7 +51,7 @@
                 <form>
                     <div class="form-group">
                         <label for="comment">Комментарий:</label>
-                        <textarea class="form-control" rows="5" id="comment"></textarea>
+                        <textarea class="form-control" rows="5" id="comment" title="Комментарий"></textarea>
                     </div>
                 </form>
             </div>
