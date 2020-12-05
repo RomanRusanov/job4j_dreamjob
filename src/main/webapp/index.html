@@ -13,7 +13,7 @@
             var lastname = checkUserInput($('#lastname'));
             var sex = checkUserInput($('input[name="sex"]:checked'));
             var comment = checkUserInput($('#comment'));
-            // alert($('input[name="sex"]').attr("title"));
+            addRow(firstname, lastname, sex, comment);
         }
         function checkUserInput(input) {
             var currentInput = $(input).val();
@@ -23,7 +23,15 @@
             }
             return currentInput;
         }
-
+        function addRow(firstname, lastname, sex, comment) {
+            $('#table tr:last').after('<tr>' +
+                '<td>' + firstname +'</td>' +
+                '<td>' + lastname +'</td>' +
+                '<td>' + sex +'</td>' +
+                '<td>' + comment +'</td>' +
+                '</tr>'
+            );
+        }
     </script>
 </head>
 <body>
@@ -60,7 +68,7 @@
     </div>
     <div class="container">
         <h2>Таблица</h2>
-        <table class="table table-bordered">
+        <table class="table table-bordered" id="table">
             <thead>
             <tr>
                 <th>Имя</th>
