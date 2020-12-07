@@ -15,11 +15,12 @@
         $.ajax({
             type: 'GET',
             url: 'http://localhost:8080/dreamjob/greet',
-            data: 'name=' + $('#exampleInputEmail1').val(),
-            dataType: 'text'
+            data: {text : $('#exampleInputEmail1').val()},
+            dataType: 'json',
+            contentType: 'application/json',
         }).done(function(data) {
             var formElement = document.getElementById('form');
-            formElement.before(data);
+            formElement.before("Hello: " + data.name);
         }).fail(function(err){
             alert(err);
         });
