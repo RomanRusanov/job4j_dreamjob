@@ -147,7 +147,10 @@ public class PsqlStore implements Store, Validate {
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
-                    candidates.add(new Candidate(it.getInt("id"), it.getString("name")));
+                    candidates.add(new Candidate(
+                            it.getInt("id"),
+                            it.getString("name"),
+                            it.getInt("city_id")));
                 }
             }
         } catch (Exception e) {
@@ -381,7 +384,7 @@ public class PsqlStore implements Store, Validate {
      */
     @Override
     public Candidate findCandidateById(int id) {
-        Candidate result = new Candidate(0, "");
+        Candidate result = new Candidate(0, "", 0);
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement(
                      "select * from candidate where id=(?)")

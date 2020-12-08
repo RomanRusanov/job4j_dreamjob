@@ -5,7 +5,8 @@ CREATE TABLE post (
 CREATE TABLE candidate (
     id SERIAL PRIMARY KEY,
     name TEXT,
-    photo_id NUMERIC
+    photo_id NUMERIC,
+    city_id NUMERIC
 );
 CREATE TABLE photo (
     id SERIAL PRIMARY KEY,
@@ -16,4 +17,8 @@ CREATE TABLE userapp (
     name TEXT,
     email TEXT,
     password TEXT
+);
+CREATE TABLE city (
+   id SERIAL PRIMARY KEY,
+   name TEXT
 );

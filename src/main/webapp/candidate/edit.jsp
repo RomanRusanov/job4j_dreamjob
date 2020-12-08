@@ -17,13 +17,29 @@
             integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
+    <script>
+        function validate() {
+            var name = checkUserInput($('#name'));
+            if (name !== "") {
+                return true;
+            }
+            return false;
+        }
+        function checkUserInput(input) {
+            var currentInput = $(input).val();
+            if (currentInput === '' || currentInput === undefined) {
+                alert("Поле: "+ $(input).attr('title') + " не заполнено")
+                return "";
+            }
+            return currentInput;
+        }
+    </script>
     <title>Работа мечты</title>
 </head>
 <body>
 <%
     String id = request.getParameter("id");
-    Candidate candidate = new Candidate(0, "");
+    Candidate candidate = new Candidate(0, "", 0);
     if (id != null) {
         candidate = (Candidate) request.getAttribute("candidateById");
     }
@@ -47,9 +63,9 @@
                 <form action="<%=request.getContextPath()%>/candidate/edit.do?id=<%=candidate.getId()%>" method="post">
                     <div class="form-group">
                         <label>Имя</label>
-                        <input type="text" class="form-control" name="name" value="<%=candidate.getName()%>">
+                        <input type="text" id="name" title="Имя" class="form-control" name="name" value="<%=candidate.getName()%>">
                     </div>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="submit" class="btn btn-primary" onclick="return validate()">Сохранить</button>
                 </form>
             </div>
         </div>

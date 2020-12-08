@@ -18,6 +18,26 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
+    <script>
+        function validate() {
+            var name = checkUserInput($('#name'));
+            var email = checkUserInput($('#email'));
+            var password = checkUserInput($('#password'));
+            if (name !== "" && email !== "" && password !== "") {
+                return true;
+            }
+            return false;
+        }
+        function checkUserInput(input) {
+            var currentInput = $(input).val();
+            if (currentInput === '' || currentInput === undefined) {
+                alert("Поле: "+ $(input).attr('title') + " не заполнено")
+                return "";
+            }
+            return currentInput;
+        }
+    </script>
+
     <title>Работа мечты</title>
 </head>
 <body>
@@ -47,13 +67,13 @@
                 <form action="<%=request.getContextPath()%>/users/edit.do?id=<%=user.getId()%>" method="post">
                     <div class="form-group">
                         <label>Имя</label>
-                        <input type="text" class="form-control" name="name" value="<%=user.getName()%>">
+                        <input type="text" id="name" title="Имя" class="form-control" name="name" value="<%=user.getName()%>">
                         <label>E-mail</label>
-                        <input type="text" class="form-control" name="email" value="<%=user.getEmail()%>">
+                        <input type="text" id="email" title="E-mail" class="form-control" name="email" value="<%=user.getEmail()%>">
                         <label>Password</label>
-                        <input type="text" class="form-control" name="password" value="<%=user.getPassword()%>">
+                        <input type="text" id="password" title="Password" class="form-control" name="password" value="<%=user.getPassword()%>">
                     </div>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="submit" class="btn btn-primary" onclick="return validate()">Сохранить</button>
                 </form>
             </div>
         </div>

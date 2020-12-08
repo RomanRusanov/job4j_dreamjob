@@ -16,10 +16,28 @@
             integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
+    <script>
+        function validate() {
+            var email = checkUserInput($('#email'));
+            var password = checkUserInput($('#password'));
+            if (email !== "" && password !== "") {
+                return true;
+            }
+            return false;
+        }
+        function checkUserInput(input) {
+            var currentInput = $(input).val();
+            if (currentInput === '' || currentInput === undefined) {
+                alert("Поле: "+ $(input).attr('title') + " не заполнено")
+                return "";
+            }
+            return currentInput;
+        }
+    </script>
     <title>Работа мечты</title>
 </head>
 <body>
+
 <div class="container pt-3">
 
     <div class="row">
@@ -31,13 +49,13 @@
                 <form action="<%=request.getContextPath()%>/auth.do" method="post">
                     <div class="form-group">
                         <label>Почта</label>
-                        <input type="text" class="form-control" name="email">
+                        <input type="text" id="email" class="form-control" name="email" title="email">
                     </div>
                     <div class="form-group">
                         <label>Пароль</label>
-                        <input type="text" class="form-control" name="password">
+                        <input type="text" id="password" class="form-control" name="password" title="password">
                     </div>
-                    <button type="submit" class="btn btn-primary">Войти</button>
+                    <button type="submit" class="btn btn-primary" onclick="return validate()">Войти</button>
                     <a href='<c:url value="/reg.do"/>'>Регистрация пользователя</a>
                 </form>
             </div>

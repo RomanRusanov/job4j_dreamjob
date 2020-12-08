@@ -21,15 +21,20 @@ public class Candidate {
      * The field contain id photo in DB.
      */
     private int photoId;
+    /**
+     * The field contain id city in DB.
+     */
+    private int cityId;
 
     /**
      * The default constrictor.
      * @param id id value.
      * @param name name value.
      */
-    public Candidate(int id, String name) {
+    public Candidate(int id, String name, int cityId) {
         this.id = id;
         this.name = name;
+        this.cityId = cityId;
     }
 
     /**
@@ -81,6 +86,22 @@ public class Candidate {
     }
 
     /**
+     * The getter for cityId field.
+     * @return int city id.
+     */
+    public int getCityId() {
+        return this.cityId;
+    }
+
+    /**
+     * The setter for cityId field.
+     * @param cityId int value.
+     */
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
+    }
+
+    /**
      * The method override equals.
      * @param o Object to compare.
      * @return if fields equals return true, otherwise false.
@@ -91,6 +112,7 @@ public class Candidate {
         if (o == null || getClass() != o.getClass()) return false;
         Candidate candidate = (Candidate) o;
         return id == candidate.id &&
+                cityId == candidate.cityId &&
                 Objects.equals(name, candidate.name);
     }
 
@@ -100,7 +122,7 @@ public class Candidate {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id, name, cityId);
     }
 
     /**
@@ -113,6 +135,7 @@ public class Candidate {
                 + "id=" + id
                 +", name='" + name + '\''
                 +", photoId='" + photoId + '\''
+                +", cityId='" + cityId + '\''
                 + '}';
     }
 }
