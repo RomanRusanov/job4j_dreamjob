@@ -36,7 +36,6 @@
                     <thead>
                     <tr>
                         <th scope="col">Названия</th>
-                        <th scope="col">Город</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -56,9 +55,6 @@
                                 <a href='<c:url value="/candidate/delete.do?id=${candidate.id}"/>'>
                                     Удалить кандидата
                                 </a>
-                            </td>
-                            <td>
-                                <c:out value="${candidate.cityId}"/>
                             </td>
                         </tr>
                     </c:forEach>

@@ -26,11 +26,15 @@ public class CandidateEditServlet extends HttpServlet{
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Candidate candidate = new Candidate(0, "", 0);
         if (req.getParameter("id") != null) {
-            req.setAttribute(
-                    "candidateById", PsqlStore.instOf().findCandidateById(
-                            Integer.parseInt(req.getParameter("id"))));
+            candidate = PsqlStore.instOf().findCandidateById(
+                    Integer.parseInt(req.getParameter("id")));
+            req.setAttribute("candidateById", candidate);
         }
+        PsqlStore store = (PsqlStore) PsqlStore.instOf();
+        int cityId = candidate.getCityId();
+        req.setAttribute("cityName", store.getCityNameById(cityId));
         req.setAttribute("user", req.getSession().getAttribute("user"));
         req.getRequestDispatcher("/candidate/edit.jsp").forward(req, resp);
     }
@@ -48,7 +52,7 @@ public class CandidateEditServlet extends HttpServlet{
                 new Candidate(
                         Integer.valueOf(req.getParameter("id")),
                         req.getParameter("name"),
-                        Integer.parseInt(req.getParameter("cityId"))));
+                        Integer.parseInt(req.getParameter("city"))));
         resp.sendRedirect(req.getContextPath() + "/candidates.do");
     }
 }

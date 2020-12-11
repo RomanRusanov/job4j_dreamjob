@@ -13,7 +13,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 /**
  * @author Roman Rusanov
@@ -320,9 +322,11 @@ public class PsqlStore implements Store, Validate {
     private Candidate createCandidate(Candidate candidate) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement(
-                     "INSERT INTO candidate(name) VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+                     "INSERT INTO candidate(name, city_id) VALUES (?,?)", PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, candidate.getName());
+            ps.setInt(2, candidate.getCityId());
+
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -342,10 +346,11 @@ public class PsqlStore implements Store, Validate {
     private void updateCandidate(Candidate candidate) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement(
-                     "UPDATE candidate set name=(?) where id=(?)")
+                     "UPDATE candidate set name=(?), city_id=(?) where id=(?)")
         ) {
             ps.setString(1, candidate.getName());
-            ps.setInt(2, candidate.getId());
+            ps.setInt(2, candidate.getCityId());
+            ps.setInt(3, candidate.getId());
             ps.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -394,6 +399,8 @@ public class PsqlStore implements Store, Validate {
                 if (record.next()) {
                     result.setId(record.getInt(1));
                     result.setName(record.getString(2));
+                    result.setCityId(record.getInt(4));
+
                 }
             }
         } catch (Exception e) {
@@ -563,5 +570,50 @@ public class PsqlStore implements Store, Validate {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * The method return all exist city
+     * @return Collection with names.
+     */
+    public Map<Integer, String> getAllCity() {
+        HashMap<Integer, String> result = new HashMap<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement(
+                     "select * from city;")
+        ) {
+            try (ResultSet record = ps.executeQuery()) {
+                while (record.next()) {
+                    int id = record.getInt(1);
+                    String cityName = record.getString(2);
+                    result.put(id, cityName);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * The method return all exist city
+     * @return Collection with names.
+     */
+    public String getCityNameById(int id) {
+        String result = "";
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement(
+                     "select name from city where id=(?);")
+        ) {
+            ps.setInt(1, id);
+            try (ResultSet record = ps.executeQuery()) {
+                if (record.next()) {
+                    result = record.getString(1);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }
