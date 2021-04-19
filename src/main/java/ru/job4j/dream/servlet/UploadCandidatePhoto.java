@@ -36,7 +36,7 @@ public class UploadCandidatePhoto extends HttpServlet {
             List<FileItem> items = upload.parseRequest(req);
             File folder = new File("images/phote_id");
             if (!folder.exists()) {
-                folder.mkdir();
+                folder.mkdirs();
             }
             for (FileItem item : items) {
                 if (!item.isFormField()) {
